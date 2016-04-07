@@ -1,4 +1,4 @@
-# MobileMessaging
+# MobileMessaging SDK
 
 [![Version](https://img.shields.io/cocoapods/v/MobileMessaging.svg?style=flat)](http://cocoapods.org/pods/MobileMessaging)
 [![License](https://img.shields.io/cocoapods/l/MobileMessaging.svg?style=flat)](http://cocoapods.org/pods/MobileMessaging)
@@ -31,17 +31,15 @@ To run the example project, clone the repo, and run `pod install` from the Examp
     ```
 6. Perform code modification to the app delegate in order to receive push notifications:
 	1. Import the library:
-
-    ```
-    // Swift
-    import IBMobileMessaging
-    ```
-    ```
-    // Objective-C
-    @import IBMobileMessaging;
-    ```
+	```
+	// Swift
+	import IBMobileMessaging
+	```
+	```
+	// Objective-C
+	@import IBMobileMessaging;
+	```
   	2. Start MobileMessaging service using your Application Code as a parameter:
-
 	```
 	// Swift
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -53,7 +51,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	// Objective-C
 	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 		[IBMobileMessaging startWithApplicationCode:@"application_code"];
-	...
+		...
 	}
 	```
   	3. Setup notification types that you want to use and register for remote notifications:
