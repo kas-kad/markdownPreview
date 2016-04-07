@@ -31,16 +31,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	pod 'MobileMessaging'
 	```
 6. Perform code modification to the app delegate in order to receive push notifications:
-	1. one
-
-		```swift
-		import IBMobileMessaging
-		```
-	2. two
-	3. three
-
-
-<!-- 	1. Import the library:
+	1. Import the library:
 
 		```swift
 		// Swift
@@ -126,4 +117,3 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 			[IBMobileMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 		}
 		```
- -->
