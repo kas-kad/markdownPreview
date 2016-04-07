@@ -30,7 +30,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
     pod 'MobileMessaging'
     ```
 6. Perform code modification to the app delegate in order to receive push notifications:
-  1. Import the library:
+  	1. Import the library:
         ```
         // Swift
         import IBMobileMessaging
@@ -39,7 +39,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
         // Objective-C
         @import IBMobileMessaging;
         ```
-  2. Start MobileMessaging service using your Application Code as a parameter:
+  	2. Start MobileMessaging service using your Application Code as a parameter:
 	```
 	// Swift
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -54,7 +54,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	...
 	}
 	```
-  3. Setup notification types that you want to use and register for remote notifications:
+  	3. Setup notification types that you want to use and register for remote notifications:
         ```
         // Swift
         func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -81,7 +81,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
             ...
         }
         ```
-  4. Override method `application:didRegisterForRemoteNotificationsWithDeviceToken:` in order to inform Infobip about the new device registered:
+  	4. Override method `application:didRegisterForRemoteNotificationsWithDeviceToken:` in order to inform Infobip about the new device registered:
         ```
         // Swift
         func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
@@ -94,13 +94,15 @@ To run the example project, clone the repo, and run `pod install` from the Examp
             [IBMobileMessaging didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
         }
         ```
-  5. Override method `application:didReceiveRemoteNotification:fetchCompletionHandler:` in order to send notification delivery reports to Infobip:
+  	5. Override method `application:didReceiveRemoteNotification:fetchCompletionHandler:` in order to send notification delivery reports to Infobip:
+
         ```
         // Swift
         func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
             IBMobileMessaging.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
         }
         ```
+        
         ```
         // Objective-C
         - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
