@@ -90,26 +90,32 @@ pod 'MobileMessaging'
 		...
 	}
 	```
+
   	4. Override method `application:didRegisterForRemoteNotificationsWithDeviceToken:` in order to inform Infobip about the new device registered:
+
 	```swift
 	// Swift
 	func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
 		IBMobileMessaging.didRegisterForRemoteNotificationsWithDeviceToken(deviceToken)
 	}
 	```
+
 	```objective-c
 	// Objective-C
 	- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 		[IBMobileMessaging didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 	}
 	```
+
   	5. Override method `application:didReceiveRemoteNotification:fetchCompletionHandler:` in order to send notification delivery reports to Infobip:
+
 	```swift
 	// Swift
 	func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
 		IBMobileMessaging.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
 	}
 	```
+
 	```objective-c
 	// Objective-C
 	- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
