@@ -23,23 +23,29 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	1. Click on "Capabilities", then turn on Push Notifications.
 	2. Turn on Background Modes and check the Remote notifications checkbox.
 5. Install MobileMessaging using Cocoa Pods. The podfile example:
+
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 pod 'MobileMessaging'
 ```
+
 6. Perform code modification to the app delegate in order to receive push notifications:
 	1. Import the library:
+
 	```swift
 	// Swift
 	import IBMobileMessaging
 	```
+
 	```objective-c
 	// Objective-C
 	@import IBMobileMessaging;
 	```
+
   	2. Start MobileMessaging service using your Application Code as a parameter:
+
 	```swift
 	// Swift
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -47,6 +53,7 @@ pod 'MobileMessaging'
 	    ...
 	}	
 	```
+
 	```objective-c
 	// Objective-C
 	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -54,7 +61,9 @@ pod 'MobileMessaging'
 		...
 	}
 	```
+
   	3. Setup notification types that you want to use and register for remote notifications:
+
 	```swift
 	// Swift
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {         		IBMobileMessaging.startWithApplicationCode("application_code")
@@ -66,6 +75,7 @@ pod 'MobileMessaging'
 		...
 	}
 	```
+
 	```objective-c
 	// Objective-C
 	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
