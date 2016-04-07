@@ -33,7 +33,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 6. Perform code modification to the app delegate in order to receive push notifications:
 	1. one
 
-		```
+		```swift
 		import IBMobileMessaging
 		```
 	2. two
