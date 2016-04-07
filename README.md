@@ -55,7 +55,6 @@ pod 'MobileMessaging'
 	}
 	```
   	3. Setup notification types that you want to use and register for remote notifications:
-
 	```swift
 	// Swift
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {         		IBMobileMessaging.startWithApplicationCode("application_code")
@@ -82,7 +81,6 @@ pod 'MobileMessaging'
 	}
 	```
   	4. Override method `application:didRegisterForRemoteNotificationsWithDeviceToken:` in order to inform Infobip about the new device registered:
-
 	```swift
 	// Swift
 	func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
@@ -96,7 +94,6 @@ pod 'MobileMessaging'
 	}
 	```
   	5. Override method `application:didReceiveRemoteNotification:fetchCompletionHandler:` in order to send notification delivery reports to Infobip:
-
 	```swift
 	// Swift
 	func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
