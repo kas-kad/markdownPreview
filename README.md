@@ -24,7 +24,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	2. Turn on Background Modes and check the Remote notifications checkbox.
 5. Install MobileMessaging using Cocoa Pods. The podfile example:
 
-	```ruby
+	```
 	source 'https://github.com/CocoaPods/Specs.git'
 	platform :ios, '8.0'
 	use_frameworks!
