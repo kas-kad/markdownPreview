@@ -47,8 +47,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 		```swift
 		// Swift
 		func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-		    IBMobileMessaging.startWithApplicationCode("application_code")
-		    ...
+			IBMobileMessaging.startWithApplicationCode("application_code")
+			...
 		}	
 		```
 
@@ -78,9 +78,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 		- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 			[IBMobileMessaging startWithApplicationCode:@"application_code"];
 
-			UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-	                                                          UIUserNotificationTypeBadge |
-	                                                          UIUserNotificationTypeSound);
+			UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
 			UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
 			[application registerUserNotificationSettings:settings];
 			[application registerForRemoteNotifications];
