@@ -39,6 +39,9 @@ To run the example project, clone the repo, and run `pod install` from the Examp
     </tr>
     <tr>
       <td>
+      	
+      	`import IBMobileMessaging`
+      	
 	```swift
 	// Swift
 	import IBMobileMessaging
