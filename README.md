@@ -153,8 +153,12 @@ Perform code modification to the app delegate in order to receive push notificat
 
 	```swift
 	// Swift
-	override var applicationCode: String { return "c297d38814740a23f50b5c876e226445-0f700564-abbf-4b5b-beae-86a4ef410904" }
-	override var userNotificationType: UIUserNotificationType { return [.Alert, .Sound] }
+	override var applicationCode: String {
+		return "c297d38814740a23f50b5c876e226445-0f700564-abbf-4b5b-beae-86a4ef410904"
+	}
+	override var userNotificationType: UIUserNotificationType {
+		return [.Alert, .Sound]
+	}
 	```
 
 	```objective-c
