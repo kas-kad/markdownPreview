@@ -35,6 +35,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ### Integrating Mobile Messaging into your code (Traditional way)
 Perform code modification to the app delegate in order to receive push notifications:
+
 1. Import the library:
 
 	```swift
