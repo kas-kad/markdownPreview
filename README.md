@@ -32,16 +32,4 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	```
 | Traditional | AppDelegate inheritance |
 | --- | --- |
-
 | 6. Perform code modification to the app delegate in order to receive push notifications: | 6. Inherit your AppDelegate from `MobileMessagingAppDelegate` |
-|	1. Import the library: | 1. Import the library: |
-| | first line |
-|		```swift | second line |
-|		// Swift |
-|		import IBMobileMessaging |
-|		``` |
-| |
-|		```objective-c |
-|		// Objective-C |
-|		@import IBMobileMessaging; |
-|		``` |
