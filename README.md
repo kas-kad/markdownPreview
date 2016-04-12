@@ -30,88 +30,18 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	use_frameworks!
 	pod 'MobileMessaging'
 	```
-6. Perform code modification to the app delegate in order to receive push notifications:
-	1. Import the library:
+| Traditional | AppDelegate inheritance |
+| --- | --- |
 
-		```swift
-		// Swift
-		import IBMobileMessaging
-		```
-
-		```objective-c
-		// Objective-C
-		@import IBMobileMessaging;
-		```
-	2. Start MobileMessaging service using your Application Code as a parameter:
-
-		```swift
-		// Swift
-		func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-			IBMobileMessaging.startWithApplicationCode("application_code")
-			...
-		}	
-		```
-
-		```objective-c
-		// Objective-C
-		- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-			[IBMobileMessaging startWithApplicationCode:@"application_code"];
-			...
-		}
-		```
-	3. Setup notification types that you want to use and register for remote notifications:
-
-		```swift
-		// Swift
-		func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {         		IBMobileMessaging.startWithApplicationCode("application_code")
-
-			let userNotificationTypes: UIUserNotificationType = [.Alert, .Badge, .Sound]
-			let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-			application.registerUserNotificationSettings(settings)
-			application.registerForRemoteNotifications()
-			...
-		}
-		```
-
-		```objective-c
-		// Objective-C
-		- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-			[IBMobileMessaging startWithApplicationCode:@"application_code"];
-
-			UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
-			UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
-			[application registerUserNotificationSettings:settings];
-			[application registerForRemoteNotifications];
-			...
-		}
-		```
-	4. Override method `application:didRegisterForRemoteNotificationsWithDeviceToken:` in order to inform Infobip about the new device registered:
-
-		```swift
-		// Swift
-		func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-			IBMobileMessaging.didRegisterForRemoteNotificationsWithDeviceToken(deviceToken)
-		}
-		```
-
-		```objective-c
-		// Objective-C
-		- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-			[IBMobileMessaging didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-		}
-		```
-	5. Override method `application:didReceiveRemoteNotification:fetchCompletionHandler:` in order to send notification delivery reports to Infobip:
-
-		```swift
-		// Swift
-		func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-			IBMobileMessaging.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
-		}
-		```
-
-		```objective-c
-		// Objective-C
-		- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
-			[IBMobileMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
-		}
-		```
+| 6. Perform code modification to the app delegate in order to receive push notifications: | 6. Inherit your AppDelegate from `MobileMessagingAppDelegate` |
+|	1. Import the library: | 1. Import the library: |
+| | first line |
+|		```swift | second line |
+|		// Swift |
+|		import IBMobileMessaging |
+|		``` |
+| |
+|		```objective-c |
+|		// Objective-C |
+|		@import IBMobileMessaging; |
+|		``` |
