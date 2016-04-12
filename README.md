@@ -34,34 +34,98 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 <table>
   <tbody>
     <tr>
-      <th>Tables</th>
-      <th align="center">Are</th>
-      <th align="right">Cool</th>
-    </tr>
-    <tr>
-      <td>col 3 is</td>
-      <td align="center">right-aligned</td>
-      <td align="right">$1600</td>
-    </tr>
-    <tr>
-      <td>col 2 is</td>
-      <td align="center">centered</td>
-      <td align="right">$12</td>
-    </tr>
-    <tr>
-      <td>zebra stripes</td>
-      <td align="center">are neat</td>
-      <td align="right">$1</td>
+      <th align="center">Traditional</th>
+      <th align="center">AppDelegate inheritance</th>
     </tr>
     <tr>
       <td>
-        <ul>
-          <li>item1</li>
-          <li>item2</li>
-        </ul>
+6. Perform code modification to the app delegate in order to receive push notifications:
+	1. Import the library:
+
+		```swift
+		// Swift
+		import IBMobileMessaging
+		```
+
+		```objective-c
+		// Objective-C
+		@import IBMobileMessaging;
+		```
+	2. Start MobileMessaging service using your Application Code as a parameter:
+
+		```swift
+		// Swift
+		func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+			IBMobileMessaging.startWithApplicationCode("application_code")
+			...
+		}	
+		```
+
+		```objective-c
+		// Objective-C
+		- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+			[IBMobileMessaging startWithApplicationCode:@"application_code"];
+			...
+		}
+		```
+	3. Setup notification types that you want to use and register for remote notifications:
+
+		```swift
+		// Swift
+		func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {         		IBMobileMessaging.startWithApplicationCode("application_code")
+
+			let userNotificationTypes: UIUserNotificationType = [.Alert, .Badge, .Sound]
+			let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+			application.registerUserNotificationSettings(settings)
+			application.registerForRemoteNotifications()
+			...
+		}
+		```
+
+		```objective-c
+		// Objective-C
+		- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+			[IBMobileMessaging startWithApplicationCode:@"application_code"];
+
+			UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
+			UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
+			[application registerUserNotificationSettings:settings];
+			[application registerForRemoteNotifications];
+			...
+		}
+		```
+	4. Override method `application:didRegisterForRemoteNotificationsWithDeviceToken:` in order to inform Infobip about the new device registered:
+
+		```swift
+		// Swift
+		func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+			IBMobileMessaging.didRegisterForRemoteNotificationsWithDeviceToken(deviceToken)
+		}
+		```
+
+		```objective-c
+		// Objective-C
+		- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+			[IBMobileMessaging didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+		}
+		```
+	5. Override method `application:didReceiveRemoteNotification:fetchCompletionHandler:` in order to send notification delivery reports to Infobip:
+
+		```swift
+		// Swift
+		func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+			IBMobileMessaging.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
+		}
+		```
+
+		```objective-c
+		// Objective-C
+		- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+			[IBMobileMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+		}
+		```
       </td>
-      <td align="center">See the list</td>
-      <td align="right">from the first column</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
