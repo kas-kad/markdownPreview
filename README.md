@@ -32,9 +32,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	```
 | Traditional | AppDelegate inheritance |
 | --- | --- |
-| ``` | first line |
-| source 'https://github.com/CocoaPods/Specs.git' |
-| platform :ios, '8.0' |
-| use_frameworks! |
-| pod 'MobileMessaging' |
-| ``` |
+| `source 'https://github.com/CocoaPods/Specs.git'` | first line |
+| `platform :ios, '8.0'` |
+| `use_frameworks!` |
+| `pod 'MobileMessaging'` |
