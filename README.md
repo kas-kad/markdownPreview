@@ -39,7 +39,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
     </tr>
     <tr>
       <td>
-      	```swift
+	```swift
 	// Swift
 	import IBMobileMessaging
 	```
