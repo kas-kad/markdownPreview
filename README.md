@@ -30,6 +30,18 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	use_frameworks!
 	pod 'MobileMessaging'
 	```
+	
+| Status | Response  |
+| ------ | --------- |
+| 200    | `json`                          |
+|        | `   {`                          |
+|        | ` "id": 10,`                    |
+|        | ` "username": "alanpartridge",` |
+|        | ` more code...`                 |
+|        | `}`                             |
+| 400    |                                 |
+	
+	
 | Traditional | AppDelegate inheritance |
 | --- | --- |
 | `source 'https://github.com/CocoaPods/Specs.git'` | first line |
