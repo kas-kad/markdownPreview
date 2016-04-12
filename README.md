@@ -38,11 +38,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
       <th align="center">AppDelegate inheritance</th>
     </tr>
     <tr>
-      <td>
-
-	`import IBMobileMessaging`
-
-      </td>
+      <td>`import IBMobileMessaging`</td>
       <td>123</td>
     </tr>
   </tbody>
