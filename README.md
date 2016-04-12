@@ -145,7 +145,7 @@ Perform code modification to the app delegate in order to receive push notificat
 	}
 	```
 
-	```
+	```objective-c
 	// Objective-C
 	@interface AppDelegate : MobileMessagingAppDelegateObjc
 	```
