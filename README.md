@@ -40,7 +40,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
     <tr>
       <td>
       	
-      	`import IBMobileMessaging`
+		`import IBMobileMessaging`
       	
       </td>
       <td>123</td>
