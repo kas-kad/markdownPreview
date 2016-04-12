@@ -152,11 +152,12 @@ Perform code modification to the app delegate in order to receive push notificat
 	```
 4. Rename existing methods from the list:
 
-	- `application(:didFinishLaunchingWithOptions:)`
-	- `application(:didRegisterForRemoteNotificationsWithDeviceToken:)`
-	- `application(:didReceiveRemoteNotification:fetchCompletionHandler:)`
-to corresponding:
+	* `application(:didFinishLaunchingWithOptions:)`
+	* `application(:didRegisterForRemoteNotificationsWithDeviceToken:)`
+	* `application(:didReceiveRemoteNotification:fetchCompletionHandler:)`
 
-	- `mm_application(:didFinishLaunchingWithOptions:)`
-	- `mm_application(:didRegisterForRemoteNotificationsWithDeviceToken:)`
-	- `mm_application(:didReceiveRemoteNotification:fetchCompletionHandler:)`
+	to corresponding:
+
+	* `mm_application(:didFinishLaunchingWithOptions:)`
+	* `mm_application(:didRegisterForRemoteNotificationsWithDeviceToken:)`
+	* `mm_application(:didReceiveRemoteNotification:fetchCompletionHandler:)`
