@@ -32,9 +32,9 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	```
 | Traditional | AppDelegate inheritance |
 | --- | --- |
-| ```Perform code modification to the app delegate in order to receive push notifications:``` | ```
-	source 'https://github.com/CocoaPods/Specs.git'
-	platform :ios, '8.0'
-	use_frameworks!
-	pod 'MobileMessaging'
-	``` |
+| ``` | first line |
+| source 'https://github.com/CocoaPods/Specs.git' |
+| platform :ios, '8.0' |
+| use_frameworks! |
+| pod 'MobileMessaging' |
+| ``` |
