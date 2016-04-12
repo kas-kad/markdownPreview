@@ -120,3 +120,43 @@ Perform code modification to the app delegate in order to receive push notificat
 		[IBMobileMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 	}
 	```
+
+### AppDelegate inheritance way
+Perform code modification to the app delegate in order to receive push notifications:
+
+1. Import the library:
+
+	```swift
+	// Swift
+	import IBMobileMessaging
+	```
+
+	```objective-c
+	// Objective-C
+	@import IBMobileMessaging;
+	```
+2. Inherit your `AppDelegate` from `MobileMessagingAppDelegate`:
+
+	```swift
+	// Swift
+	class AppDelegate: MobileMessagingAppDelegate {
+		...
+	}
+	```
+3. Override `applicationCode` and `userNotificationType` variables in your `AppDelegate` providing appropriate values:
+
+	```swift
+	// Swift
+	override var applicationCode: String { return "c297d38814740a23f50b5c876e226445-0f700564-abbf-4b5b-beae-86a4ef410904" }
+	override var userNotificationType: UIUserNotificationType { return [.Alert, .Sound] }
+	```
+4. Rename existing methods from the list:
+
+	- `application(:didFinishLaunchingWithOptions:)`
+	- `application(:didRegisterForRemoteNotificationsWithDeviceToken:)`
+	- `application(:didReceiveRemoteNotification:fetchCompletionHandler:)`
+to corresponding:
+
+	- `mm_application(:didFinishLaunchingWithOptions:)`
+	- `mm_application(:didRegisterForRemoteNotificationsWithDeviceToken:)`
+	- `mm_application(:didReceiveRemoteNotification:fetchCompletionHandler:)`
