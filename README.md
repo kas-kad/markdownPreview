@@ -32,19 +32,19 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	```
 	
 <table>
-  <tbody>
-    <tr>
-      <th align="center">Traditional</th>
-      <th align="center">AppDelegate inheritance</th>
-    </tr>
-    <tr>
-      <td>
+	<tbody>
+		<tr>
+			<th align="center">Traditional</th>
+			<th align="center">AppDelegate inheritance</th>
+		</tr>
+		<tr>
+			<td>
 ```swift
 // Swift
 import IBMobileMessaging
 ```
-      </td>
-      <td>123</td>
-    </tr>
-  </tbody>
+			</td>
+			<td>123</td>
+		</tr>
+	</tbody>
 </table>
