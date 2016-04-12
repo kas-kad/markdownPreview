@@ -133,15 +133,21 @@ Perform code modification to the app delegate in order to receive push notificat
 
 	```objective-c
 	// Objective-C
+	// AppDelegate.h file
 	@import IBMobileMessaging;
 	```
-2. Inherit your `AppDelegate` from `MobileMessagingAppDelegate`:
+2. Inherit your `AppDelegate` from `MobileMessagingAppDelegate` or `MobileMessagingAppDelegateObjc` depending on your project's language:
 
 	```swift
 	// Swift
 	class AppDelegate: MobileMessagingAppDelegate {
 		...
 	}
+	```
+
+	```
+	// Objective-C
+	@interface AppDelegate : MobileMessagingAppDelegateObjc
 	```
 3. Override `applicationCode` and `userNotificationType` variables in your `AppDelegate` providing appropriate values:
 
@@ -150,13 +156,24 @@ Perform code modification to the app delegate in order to receive push notificat
 	override var applicationCode: String { return "c297d38814740a23f50b5c876e226445-0f700564-abbf-4b5b-beae-86a4ef410904" }
 	override var userNotificationType: UIUserNotificationType { return [.Alert, .Sound] }
 	```
-4. Rename existing methods from the list:
+
+	```objective-c
+	// Objective-C
+	-(NSString *)applicationCode {
+		return @"c297d38814740a23f50b5c876e226445-0f700564-abbf-4b5b-beae-86a4ef410904";
+	}
+
+	-(UIUserNotificationType)userNotificationType {
+		return UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
+	}
+	```
+4. If you have any of following application callbacks implemented in your AppDelegate:
 
 	* `application(:didFinishLaunchingWithOptions:)`
 	* `application(:didRegisterForRemoteNotificationsWithDeviceToken:)`
 	* `application(:didReceiveRemoteNotification:fetchCompletionHandler:)`
 
-	to corresponding:
+	, rename it to corresponding:
 
 	* `mm_application(:didFinishLaunchingWithOptions:)`
 	* `mm_application(:didRegisterForRemoteNotificationsWithDeviceToken:)`
