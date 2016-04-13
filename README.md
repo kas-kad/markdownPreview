@@ -40,19 +40,19 @@ Perform code modification to the app delegate in order to receive push notificat
 
 	```swift
 	// Swift
-	import IBMobileMessaging
+	import MobileMessaging
 	```
 
 	```objective-c
 	// Objective-C
-	@import IBMobileMessaging;
+	@import MobileMessaging;
 	```
 2. Start MobileMessaging service using your Application Code as a parameter:
 
 	```swift
 	// Swift
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-		IBMobileMessaging.startWithApplicationCode("application_code")
+		MobileMessaging.startWithApplicationCode("your\_application\_code")
 		...
 	}	
 	```
@@ -60,7 +60,7 @@ Perform code modification to the app delegate in order to receive push notificat
 	```objective-c
 	// Objective-C
 	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-		[IBMobileMessaging startWithApplicationCode:@"application_code"];
+		[MobileMessaging startWithApplicationCode:@"your\_application\_code"];
 		...
 	}
 	```
@@ -68,7 +68,8 @@ Perform code modification to the app delegate in order to receive push notificat
 
 	```swift
 	// Swift
-	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {         		IBMobileMessaging.startWithApplicationCode("application_code")
+	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+		MobileMessaging.startWithApplicationCode("your\_application\_code")
 
 		let userNotificationTypes: UIUserNotificationType = [.Alert, .Badge, .Sound]
 		let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
@@ -81,7 +82,7 @@ Perform code modification to the app delegate in order to receive push notificat
 	```objective-c
 	// Objective-C
 	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-		[IBMobileMessaging startWithApplicationCode:@"application_code"];
+		[MobileMessaging startWithApplicationCode:@"your\_application\_code"];
 
 		UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
 		UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
@@ -95,14 +96,14 @@ Perform code modification to the app delegate in order to receive push notificat
 	```swift
 	// Swift
 	func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-		IBMobileMessaging.didRegisterForRemoteNotificationsWithDeviceToken(deviceToken)
+		MobileMessaging.didRegisterForRemoteNotificationsWithDeviceToken(deviceToken)
 	}
 	```
 
 	```objective-c
 	// Objective-C
 	- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-		[IBMobileMessaging didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+		[MobileMessaging didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 	}
 	```
 5. Override method `application:didReceiveRemoteNotification:fetchCompletionHandler:` in order to send notification delivery reports to Infobip:
@@ -110,14 +111,14 @@ Perform code modification to the app delegate in order to receive push notificat
 	```swift
 	// Swift
 	func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-		IBMobileMessaging.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
+		MobileMessaging.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
 	}
 	```
 
 	```objective-c
 	// Objective-C
 	- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
-		[IBMobileMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+		[MobileMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 	}
 	```
 
@@ -128,13 +129,13 @@ Perform code modification to the app delegate in order to receive push notificat
 
 	```swift
 	// Swift
-	import IBMobileMessaging
+	import MobileMessaging
 	```
 
 	```objective-c
 	// Objective-C
 	// AppDelegate.h file
-	@import IBMobileMessaging;
+	@import MobileMessaging;
 	```
 2. Inherit your `AppDelegate` from `MobileMessagingAppDelegate` or `MobileMessagingAppDelegateObjc` depending on your project's language:
 
@@ -154,7 +155,7 @@ Perform code modification to the app delegate in order to receive push notificat
 	```swift
 	// Swift
 	override var applicationCode: String {
-		return "c297d38814740a23f50b5c876e226445-0f700564-abbf-4b5b-beae-86a4ef410904"
+		return "your\_application\_code"
 	}
 	override var userNotificationType: UIUserNotificationType {
 		return [.Alert, .Sound]
@@ -164,9 +165,8 @@ Perform code modification to the app delegate in order to receive push notificat
 	```objective-c
 	// Objective-C
 	-(NSString *)applicationCode {
-		return @"c297d38814740a23f50b5c876e226445-0f700564-abbf-4b5b-beae-86a4ef410904";
+		return @"your\_application\_code";
 	}
-
 	-(UIUserNotificationType)userNotificationType {
 		return UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
 	}
