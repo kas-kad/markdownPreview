@@ -13,7 +13,7 @@ Mobile Messaging SDK requires iOS 8.0 and later.
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 # Mobile Messaging Quick Start
-1. Prepare your App ID, provision profiles and APNs certificates (*TODO: add link to certificates guide*)
+1. Prepare your App ID, provision profiles and APNs certificates (**TODO: add link to certificates guide**)
 2. Prepare your Infobip account (https://portal.infobip.com/push/):
 	1. Create new application on Infobip Push portal.
 	2. Navigate to your Application.
