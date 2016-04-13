@@ -52,7 +52,7 @@ Perform code modification to the app delegate in order to receive push notificat
 	```swift
 	// Swift
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-		MobileMessaging.startWithApplicationCode("your\_application\_code")
+		MobileMessaging.startWithApplicationCode("your\_application_code")
 		...
 	}	
 	```
