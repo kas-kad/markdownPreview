@@ -35,6 +35,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	```
 6. Perform code modification to the app delegate in order to receive push notifications. There are two ways to do this: [App Delegate Composition](#App-Delegate-Composition) or [App Delegate Inheritance](#App-Delegate-Inheritance)
 
+
 ### App Delegate Composition
 
 1. Import the library:
@@ -122,6 +123,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 		[MobileMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 	}
 	```
+
 
 ### App Delegate Inheritance
 
