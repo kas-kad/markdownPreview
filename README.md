@@ -5,22 +5,23 @@
 [![Platform](https://img.shields.io/cocoapods/p/MobileMessaging.svg?style=flat)](http://cocoapods.org/pods/MobileMessaging)
 
 ## General
-Infobip Push library is designed and  developed to easily enable push notification channel in your mobile application. In almost no time of implementation you start sending push notification and use all feature of Infobip IP Messaging Platform. 
+Mobile Messaging SDK is designed and developed to easily enable push notification channel in your mobile application. In almost no time of implementation you get push notification in you application and access to the features of Infobip IP Messaging Platform. 
 The document describes library integration steps.
+Mobile Messaging SDK requires iOS 8.0.
 
 ## Usage
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Mobile Messaging Quick Start
-### Preparing your application
-1. Prepare your app on  Apple Developer website (https://developer.apple.com/account/ios/certificate/):
-	1. Setup App ID for your application to support Push Notifications.
-	2. Create, download and add new APNs Certificate to your Keychain.
+# Mobile Messaging Quick Start
+1. Prepare your App ID, provision profiles and APNs certificates (*TODO: add link to certificates guide*)
 2. Prepare your Infobip account (https://portal.infobip.com/push/):
 	1. Create new application on Infobip Push portal.
-	2. Upload your APNs Certificate as an *.p12 file (From your Keychain: Right-click on it, select "Export", and save it as a .p12 file.)
-	3. Get your Infobip Application Code.
-3. Create a new XCode Project.
+	2. Navigate to your Application.
+	3. Mark the "Available on iOS" checkbox.
+	4. Mark the "Sandbox" checkbox if you are using sandbox environment for the application.
+	5. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 certificate you exported from your Keychain earlier.
+	<center><img src="Images/CUPCertificate.png?raw=true" alt="CUP Settings"/></center>
+3. Create a new Xcode Project.
 4. Configure the new project to support Push Notifications:
 	1. Click on "Capabilities", then turn on Push Notifications.
 	2. Turn on Background Modes and check the Remote notifications checkbox.
@@ -32,9 +33,9 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	use_frameworks!
 	pod 'MobileMessaging'
 	```
-6. Perform code modification to the app delegate in order to receive push notifications. There are two ways to do this: either [App Delegate Composition](#app-delegate-composition) or [App Delegate Inheritance](#app-delegate-inheritance).
+6. Perform code modification to the app delegate in order to receive push notifications. There are two ways to do this: [App Delegate Composition](#App-Delegate-Composition) or [App Delegate Inheritance](#App-Delegate-Inheritance)
 
-### App Delegate Composition
+## App Delegate Composition
 
 1. Import the library:
 
@@ -122,7 +123,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	}
 	```
 
-### App Delegate Inheritance
+## App Delegate Inheritance
 
 1. Import the library, into your `AppDelegate` declaration file:
 
