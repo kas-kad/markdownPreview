@@ -32,9 +32,9 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	use_frameworks!
 	pod 'MobileMessaging'
 	```
+6. Perform code modification to the app delegate in order to receive push notifications. There are two ways to do this: [App Delegate Composition](#App-Delegate-Composition) or [App Delegate Inheritance](#App-Delegate-Inheritance)
 
-### Integrating Mobile Messaging into your code (Traditional way)
-Perform code modification to the app delegate in order to receive push notifications:
+### App Delegate Composition
 
 1. Import the library:
 
@@ -122,10 +122,9 @@ Perform code modification to the app delegate in order to receive push notificat
 	}
 	```
 
-### AppDelegate inheritance way
-Perform code modification to the app delegate in order to receive push notifications:
+### App Delegate Inheritance
 
-1. Import the library:
+1. Import the library, into your `AppDelegate` declaration file:
 
 	```swift
 	// Swift
@@ -134,7 +133,6 @@ Perform code modification to the app delegate in order to receive push notificat
 
 	```objective-c
 	// Objective-C
-	// AppDelegate.h file
 	@import MobileMessaging;
 	```
 2. Inherit your `AppDelegate` from `MobileMessagingAppDelegate` or `MobileMessagingAppDelegateObjc` depending on your project's language:
