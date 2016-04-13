@@ -60,7 +60,7 @@ Perform code modification to the app delegate in order to receive push notificat
 	```objective-c
 	// Objective-C
 	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-		[MobileMessaging startWithApplicationCode:@"your\_application\_code"];
+		[MobileMessaging startWithApplicationCode:@"your_application_code"];
 		...
 	}
 	```
@@ -69,7 +69,7 @@ Perform code modification to the app delegate in order to receive push notificat
 	```swift
 	// Swift
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-		MobileMessaging.startWithApplicationCode("your\_application\_code")
+		MobileMessaging.startWithApplicationCode("your_application_code")
 
 		let userNotificationTypes: UIUserNotificationType = [.Alert, .Badge, .Sound]
 		let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
@@ -82,7 +82,7 @@ Perform code modification to the app delegate in order to receive push notificat
 	```objective-c
 	// Objective-C
 	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-		[MobileMessaging startWithApplicationCode:@"your\_application\_code"];
+		[MobileMessaging startWithApplicationCode:@"your_application_code"];
 
 		UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
 		UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
@@ -155,7 +155,7 @@ Perform code modification to the app delegate in order to receive push notificat
 	```swift
 	// Swift
 	override var applicationCode: String {
-		return "your\_application\_code"
+		return "your_application_code"
 	}
 	override var userNotificationType: UIUserNotificationType {
 		return [.Alert, .Sound]
@@ -165,7 +165,7 @@ Perform code modification to the app delegate in order to receive push notificat
 	```objective-c
 	// Objective-C
 	-(NSString *)applicationCode {
-		return @"your\_application\_code";
+		return @"your_application_code";
 	}
 	-(UIUserNotificationType)userNotificationType {
 		return UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
