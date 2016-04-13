@@ -9,10 +9,10 @@ The document describes library integration steps.
 
 Mobile Messaging SDK requires iOS 8.0 and later.
 
-### Usage
+## Usage
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Mobile Messaging Quick Start
+# Mobile Messaging Quick Start
 1. Prepare your App ID, provision profiles and APNs certificates (**TODO: add link to certificates guide**)
 2. Prepare your Infobip account (https://portal.infobip.com/push/):
 	1. Create new application on Infobip Push portal.
@@ -35,7 +35,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	```
 6. Perform code modification to the app delegate in order to receive push notifications. There are two ways to do this: [App Delegate Composition](#App-Delegate-Composition) or [App Delegate Inheritance](#App-Delegate-Inheritance)
 
-#### App Delegate Composition
+### App Delegate Composition
 
 1. Import the library:
 
@@ -123,7 +123,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	}
 	```
 
-#### App Delegate Inheritance
+### App Delegate Inheritance
 
 1. Import the library, into your `AppDelegate` declaration file:
 
