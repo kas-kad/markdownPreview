@@ -32,7 +32,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	use_frameworks!
 	pod 'MobileMessaging'
 	```
-6. Perform code modification to the app delegate in order to receive push notifications. There are two ways to do this: [App Delegate Composition](#app-delegate-composition) or [App Delegate Inheritance](#app-delegate-inheritance)
+6. Perform code modification to the app delegate in order to receive push notifications. There are two ways to do this: either [App Delegate Composition](#app-delegate-composition) or [App Delegate Inheritance](#app-delegate-inheritance).
 
 ### App Delegate Composition
 
