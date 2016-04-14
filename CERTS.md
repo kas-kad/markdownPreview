@@ -1,5 +1,5 @@
 
-## 1.1. Creating an Explicit App ID
+### Creating an Explicit App ID
 
 In order to support Push Notifications, each application should have it's own Explicit App ID. As a standard, the applications is represented by reversed address (ex. com.example.MyApp).
 
@@ -29,7 +29,7 @@ If you already have an Explicit App ID for this app, proceed with Step 1.2. The 
 
 8. Select "Continue" and make sure that all the values were entered correctly. Push Notifications should be enabled, and the Identifier field should match your app's Bundle Identifier (plus App ID Prefix). Select "Submit" to finalize the registration of your new App ID.
 
-## 1.2. Configuring your App ID for Push Notifications
+### Configuring your App ID for Push Notifications
 
 Now that you've created a new App ID (or chosen an existing Explicit App ID), it's time to configure the App ID for Push Notifications.
 
@@ -61,7 +61,7 @@ If the Personal Information Exchange (.p12) option is grayed out in the export s
 
 You have just enabled Push Notification for your app in development mode. Prior to releasing your application on the App Store, you will need to repeat steps 1 through 7 of this section, but select "Production Push SSL Certificate" in step 2 instead. You may reuse the CSR from step 3.
 
-# 2. Creating the Development Provisioning Profile
+### Creating the Development Provisioning Profile
 
 A Provisioning Profile authenticates your device to run the app you are developing. Whether you have created a new App ID or modified an existing one, you will need to regenerate your provisioning profile and install it. If you have trouble using an existing profile, try removing the App ID and setting it back. For purposes of this tutorial, we'll create a new profile.
 
@@ -86,17 +86,3 @@ Note that prior to submitting your app to the App Store, you will need to test p
 9. Download the generated provisioning profile from the next screen by selecting the "Download" button.
 
 10. Add the profile to Xcode by double-clicking on the downloaded file.
-
-# 3. Configuring the CUP(Customer Portal) Application
-
-To use Push Notifications with Infobip, you will need to upload the APNs Certificate you created above.
-
-1. Navigate to your Application on the [CUP](https://portal.infobip.com/push).
-
-2. Mark the "Available on iOS" checkbox.
-
-3. Mark the "Sandbox" checkbox if you are using sandbox environment for the application.
-
-4. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 certificate you exported from your Keychain earlier.
-
-  <center><img src="Images/CUPCertificate.png?raw=true" alt="CUP Settings"/></center>
