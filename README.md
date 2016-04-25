@@ -20,6 +20,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 	3. Mark the "Available on iOS" checkbox.
 	4. Mark the "Sandbox" checkbox if you are using sandbox environment for the application.
 	5. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 certificate you exported from your Keychain earlier.
+
 	<center><img src="Images/CUPCertificate.png?raw=true" alt="CUP Settings"/></center>
 3. Create a new Xcode Project.
 4. Configure the new project to support Push Notifications:
