@@ -145,3 +145,4 @@ MobileMessaging.currentUser?.saveMSISDN(<# for example "385911234567" #>, comple
 	// if an error occurs, handle it
 }];
 ```
+123
