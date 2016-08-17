@@ -39,6 +39,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK integ
 
 > ### Notice 
 > MobileMessaging SDK has geofencing service enabled by default. In order to opt-out the service, skip following 6-8 steps and follow [this guide](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Geofencing-service#disabling-the-default-geofencing-service-startup).
+
 6. Include the `UIRequiredDeviceCapabilities` key in the app’s `Info.plist` file. The value for the `UIRequiredDeviceCapabilities` is an array of strings indicating the features that your app requires. Two strings are required for using geofencing services:
     - `location-services`
     - `gps`
