@@ -1,779 +1,142 @@
-# Mobile Messaging SDK plugin for Cordova
+# Mobile Messaging SDK for iOS
 
-[![GitHub release](https://img.shields.io/github/release/infobip/mobile-messaging-cordova-plugin.svg)](https://github.com/infobip/mobile-messaging-cordova-plugin/releases)
+[![Version](https://img.shields.io/cocoapods/v/MobileMessaging.svg?style=flat)](http://cocoapods.org/pods/MobileMessaging)
+[![License](https://img.shields.io/cocoapods/l/MobileMessaging.svg?style=flat)](http://cocoapods.org/pods/MobileMessaging)
+[![Platform](https://img.shields.io/cocoapods/p/MobileMessaging.svg?style=flat)](http://cocoapods.org/pods/MobileMessaging)
 
-Mobile Messaging SDK is designed and developed to easily enable push notification channel in your mobile application. In almost no time of implementation you get push notification in your application and access to the features of [Infobip IP Messaging Platform](https://portal.infobip.com/push/). 
-The document describes library integration steps for your Cordova project.
-
-> ### Notice
-> We highly encourage to configure [Notification Service Extension](#delivery-improvements-and-rich-content-notifications) for iOS. Apart from providing support for rich content it also dramatically improves delivery reporting for Push Notification on iOS. Upon implementing Notification Service Extension, SDK will be able to report delivery even when the application is killed.
-
-  * [Requirements](#requirements)
-  * [Quick start guide](#quick-start-guide)
-  * [Initialization configuration](#initialization-configuration)
-  * [Events](#events)
-    + [`messageReceived` event](#-messagereceived--event)
-    + [`notificationTapped` event](#-notificationtapped--event)
-    + [`tokenReceived` event](#-tokenreceived--event)
-    + [`registrationUpdated` event](#-registrationupdated--event)
-    + [`geofenceEntered` event](#-geofenceentered--event)
-    + [`actionTapped` event](#-actiontapped--event)
-  * [Synchronizing user data](#synchronizing-user-data)
-    + [Sync user data](#sync-user-data)
-    + [Fetch user data](#fetch-user-data)
-    + [User logout](#user-logout)
-  * [Disabling the push registration](#disabling-the-push-registration)
-  * [Mark messages as seen](#mark-messages-as-seen)
-  * [Geofencing](#geofencing)
-    + [Android](#android)
-    + [iOS](#ios)
-  * [Message storage](#message-storage)
-    + [Default message storage](#default-message-storage)
-    + [External message storage](#external-message-storage)
-    + [External message storage implementation with local storage](#external-message-storage-implementation-with-local-storage)
-  * [Privacy settings](#privacy-settings)
-  * [Delivery improvements and rich content notifications](#delivery-improvements-and-rich-content-notifications)
-    + [Enabling notification extension in iOS for rich content and reliable delivery](#enabling-notification-extension-in-ios-for-rich-content-and-reliable-delivery)
-    + [Sending content](#sending-content)
-    + [Receiving on Android](#receiving-on-android)
-    + [Receiving on iOS](#receiving-on-ios)
-  * [Interactive notifications](#interactive-notifications)
-    + [Predefined categories](#predefined-categories)
-    + [Custom categories](#custom-categories)
-  * [In-app notifications](#in-app-notifications)
-  * [Configuring device as a primary one](#configuring-device-as-a-primary-one)
-    + [Setting device as primary](#setting-device-as-primary)
-    + [Getting current setting](#getting-current-setting)
-  * [FAQ](#faq)
-    + [How to open application webView on message tap](#how-to-open-application-webview-on-message-tap)
-    + [What if my android build fails after adding the SDK?](#what-if-my-android-build-fails-after-adding-the-sdk-)
+Mobile Messaging SDK is designed and developed to easily enable push notification channel in your mobile application. In almost no time of implementation you get push notification in your application and access to the features of <a href="https://www.infobip.com/en/products/mobile-app-messaging" target="_blank">Infobip Mobile Apps Messaging</a>. The document describes library integration steps. Additional information can be found in our <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki" target="_blank">Wiki</a>.
 
 ## Requirements
-- Cordova 7.0+ (`sudo npm install -g cordova`)
-- npm (tested with 4.1.2)
-- node (tested with 7.5.0)
+- Xcode 10
+- Swift 4.2
+- iOS 9.0+
 
-For iOS project:
-- Xcode 9.3
-- Carthage (`brew install carthage`)
-- Minimum deployment target 9.0
-
-For Android project: 
-- Android Studio
-- API Level: 14 (Android 4.0 - Ice Cream Sandwich)
-
+<!-- ## Usage -->
 ## Quick start guide
-This guide is designed to get you up and running with Mobile Messaging SDK plugin for Cordova:
+This guide is designed to get you up and running with Mobile Messaging SDK integrated into your iOS application.
 
-1. Prepare your push credentials for Android and iOS:
-    1. Get Sender ID and Server API Key for Android ([Cloud Messaging credentials](https://github.com/infobip/mobile-messaging-sdk-android/wiki/Firebase-Cloud-Messaging)).
-    2. Prepare your App ID, provisioning profiles and APNs certificate ([APNs Certificate Guide](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/APNs-Certificate-guide)).
+1. Make sure to [setup application at Infobip portal](https://dev.infobip.com/push-messaging), if you haven't already.
+2. Configure your project to support Push Notifications:
+	1. Click on "Capabilities", then turn on Push Notifications. Entitlements file should be automatically created by XCode with set `aps-environment` value.
+	2. Turn on Background Modes and check the Remote notifications checkbox.
+3. Installation
 
-2. Prepare your Infobip account (https://portal.infobip.com/push/) to get your Application Code:
-    1. [Create new application](https://dev.infobip.com/v1/docs/push-introduction-create-app) on Infobip Push portal.
-    2. Navigate to your Application where you will get the Application Code.
-    3. Mark the "Available on Android" checkbox and insert previously obtained GCM Server Key (Server API Key):
-    <center><img src="https://github.com/infobip/mobile-messaging-sdk-android/wiki/images/GCMAppSetup.png" alt="CUP Settings"/></center>
+	##### CocoaPods
+	To integrate MobileMessaging into your Xcode project using [CocoaPods](https://guides.cocoapods.org/using/getting-started.html#getting-started), specify it in your `Podfile`:
 
-    4. Mark the "Available on iOS" checkbox. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 file you exported from your Keychain earlier (Mark the "Sandbox" checkbox if you are using sandbox environment for the application):
-    <center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/CUPCertificate.png?raw=true" alt="CUP Settings"/></center>
+	```ruby
+	source 'https://github.com/CocoaPods/Specs.git'
+	platform :ios, '9.0'
+	use_frameworks!
+	pod 'MobileMessaging'
+	```
 
-3. Add MobileMessaging plugin to your project, run in terminal:
-    ```bash
-    $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git#0.7.3 --nofetch --save
-    ```
+	> #### Notice 
+	> CocoaLumberjack logging used by default, in order to use other logging or switch it off follow [this guide](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/How-to-install-the-SDK-without-CocoaLumberjack%3F).
 
-4. Configure your iOS project:
-    1. To enable Push Notifications, go to "Capabilities" tab (target settings) and turn on "Push Notifications" section (we strongly recommend to re-enable it even though it is already enabled).
-    2. On your application targets’ “Build Phases” settings tab, click the “+” icon and choose “New Run Script Phase”. Create a Run Script in which you specify your shell (ex: `/bin/sh`), add the following contents to the script area below the shell:
-        ```bash
-        /usr/local/bin/carthage copy-frameworks
-        ```
-        Please note, that [Carthage](https://github.com/Carthage/Carthage) must be installed on your machine.
-    3. Add the path to the framework under “Input Files”:
-        ```
-        $SRCROOT/$PROJECT/Plugins/com-infobip-plugins-mobilemessaging/MobileMessaging.framework
-        ```
-    4. Add the path to the copied framework to the “Output Files”:
-        ```
-        $(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/MobileMessaging.framework
-        ```
-    <center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/Carthage/carthage_run_script.png" alt="Carthage run script"/></center>
+	##### Carthage
+	If you use [Carthage](https://github.com/Carthage/Carthage/#readme) to manage your dependencies, just add MobileMessaging to your `Cartfile`:
 
+	```
+	github "infobip/mobile-messaging-sdk-ios"
+	```
 
-5. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
+	If you use Carthage to build your dependencies, make sure you have added `MobileMessaging.framework` to the "Linked Frameworks and Libraries" section of your target, and have included them in your Carthage framework copying build phase (as described in [Carthage documentation](https://github.com/Carthage/Carthage/blob/master/README.md#if-youre-building-for-ios-tvos-or-watchos)).
+	If your application target does not contain Swift code at all, you should also set the `EMBEDDED_CONTENT_CONTAINS_SWIFT` build setting to “Yes”.
 
-    ```javascript
-    onDeviceReady: function() {
-        ...
-        MobileMessaging.init({
-                applicationCode: '<your_application_code>',
-                geofencingEnabled: '<true/false>',
-                android: {
-                    senderId: '<sender id>'
-                },
-                ios: {
-                    notificationTypes: ['alert', 'badge', 'sound']
-                }
-            },
-            function(error) {
-                console.log('Init error: ' + error);
-            }
-        );
+4. Perform [code modification to the app delegate](#app-delegate-changes) in order to receive push notifications.
 
-        MobileMessaging.register('messageReceived', 
-            function(message) {
-                console.log('Message Received: ' + message.body);
-            }
-        );
+5. At this step you are all set for receiving regular push notifications. There are several advanced features that you may find really useful for your product, though:
+	- [Rich Notifications and better delivery reporting(available with iOS 10)](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10)
+	- [Geofencing Service](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Geofencing-service)
 
-        ...
+### App Delegate Changes
+
+The simplest approach to integrate Mobile Messaging SDK with an existing app is by adding the SDK calls into your app delegate:
+
+1. Import the library:
+
+	```swift
+	// Swift
+	import MobileMessaging
+	```
+
+	```objective-c
+	// Objective-C
+	@import MobileMessaging;
+	```
+2. Start MobileMessaging service using your Infobip Application Code, obtained in step 2, and preferable notification type as parameters:
+
+	```swift
+	// Swift
+	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        MobileMessaging.withApplicationCode(<#your application code#>, notificationType: <#for example UserNotificationType(options: [.alert, .sound])#>)?.start()
+		...
+	}	
+	```
+
+	```objective-c
+	// Objective-C
+	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+        UserNotificationType *userNotificationType = [[UserNotificationType alloc] initWithOptions:<#for example @[UserNotificationType.alert, UserNotificationType.sound]#>;
+        [[MobileMessaging withApplicationCode: <#your application code#> notificationType: userNotificationType] start:nil];
+		...
+	}
+	```
+
+	Please note that it is not very secure to keep your API key (Application Code is an API key in fact) hardcoded so if the security is a crucial aspect, consider obfuscating the Application Code string (we can recommend [UAObfuscatedString](https://github.com/UrbanApps/UAObfuscatedString) for string obfuscation).
+
+4. Override method `application:didRegisterForRemoteNotificationsWithDeviceToken:` in order to inform Infobip about the new device registered:
+
+	```swift
+	// Swift
+	func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+		MobileMessaging.didRegisterForRemoteNotificationsWithDeviceToken(deviceToken)
+	}
+	```
+
+	```objective-c
+	// Objective-C
+	- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+		[MobileMessaging didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+	}
+	```
+5. Override method `application:didReceiveRemoteNotification:fetchCompletionHandler:` in order to send notification delivery reports to Infobip:
+
+	```swift
+	// Swift
+	func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+		MobileMessaging.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
+	}
+	```
+
+	```objective-c
+	// Objective-C
+	- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+		[MobileMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+	}
+	```
+6. **Skip this step if your apps minimum deployment target is iOS 10 or later.** Override method `application:didReceiveLocalNotification`(for Objective-C) or `application:didReceive:`(for Swift) in order the MobileMessaging SDK to be able to handle incoming local notifications internally:
+
+	```swift
+	// Swift
+	func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+		MobileMessaging.didReceiveLocalNotification(notification)
+	}
+	```
+
+	```objective-c
+	// Objective-C
+    -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+        [MobileMessaging didReceiveLocalNotification:notification];
     }
-    ```
+	```
 
-## Initialization configuration
-```javascript
-configuration: {
-    applicationCode: '<Infobip Application Code from the Customer Portal obtained in step 2>',
-    geofencingEnabled: '<set to 'true' to enable geofencing inside the library, optional>',
-    messageStorage: '<message storage implementation>',
-    defaultMessageStorage: '<set to 'true' to enable default message storage implementation>',
-    notificationCategories: [
-       {
-           identifier: <String id of notification category>,
-           actions: [
-               {
-                   identifier: <String id of notification action inside category>,
-                   title: <Title of action button>,
-                   foreground: <set to 'true' if action tap should open application>,
-                   authenticationRequired: <set to 'true' if authentication required before action takes place (iOS only)>,
-                   moRequired: <set to 'true' if tap on action should send message to the platform>,
-                   destructive: <set to 'true'>,
-                   icon: <Action icon name in resources (Android only)>
-               }
-           ]   
-       }
-    ]
-    android: {
-        senderId: '<Cloud Messaging Sender ID obtained in step 1>'
-    },
-    ios: {
-        notificationTypes: '<notification types to indicate how the app should alert user when push message arrives>',
-        notificationExtensionAppGroupId: '<app group id to sync data between main app and notification service extension>' 
-    }
-}
-```
+<br>
+<center>**NEXT STEPS: [User profile](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/User-profile)**</center>
+<br>
 
-## Events
-```javascript
-MobileMessaging.register('<event name>',
-     function(eventData) {
-         console.log('Event: ' + eventData);
-     }
-);
-```
+<br>
 
-| Event name | Event data | Description |
-| --- | --- | --- |
-| `messageReceived` | message object | Occurs when new message arrives, see separate section for all available message fields |
-| `notificationTapped` | message object | Occurs when notification is tapped. |
-| `tokenReceived` | Cloud token | Occurs when an APNs device token is received. Contains device token - a hex-encoded string received from APNS. Returns device token as hex-encoded string.|
-| `registrationUpdated` | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internalId - string for the registered user.|
-| `geofenceEntered` | geo object | Occurs when device enters a geofence area. |
-| `actionTapped` | message, actionId, text | Occurs when user taps on action inside notification or enters text as part of the notification response. |
-
-### `messageReceived` event
-```javascript
-MobileMessaging.register('messageReceived', 
-    function(message) {
-        console.log('Message Received: ' + message.body);
-    }
-);
-```
-
-### `notificationTapped` event
-```javascript
-MobileMessaging.register('notificationTapped',
-     function(message) {
-         console.log('Notification tapped: ' + message.body);
-     }
-);
-```
-
-Supported message fields are described below:
-```javascript
-message: {
-    messageId: '<unique message id>',
-    title: '<title, optional>',
-    body: '<message text>',
-    sound: '<notification sound, optional>',
-    vibrate: '<true/false, notification vibration setting (Android only)>',
-    icon: '<notification icon, optional (Android only)>',
-    silent: '<true/false, disables notification for message>',
-    category: '<notification category (Android only)>',
-    receivedTimestamp: '<absolute timestamp in milliseconds that indicates when the message was received>',
-    customPayload: '<any custom data provided with message>',
-    originalPayload: '<original payload of message (iOS only)>',
-    contentUrl: '<media content url if media provided>',
-	seen: '<true/false, was message seen or not>',
-	seenDate: '<absolute timestamp in milliseconds that indicates when the message was seen>',
-	geo: '<true/false, indicates was message triggered by geo event or not>'
-}
-```
-
-### `tokenReceived` event
-```javascript
-MobileMessaging.register('tokenReceived',
-     function(token) {
-         console.log('Token: ' + token);
-     }
-);
-```
-
-### `registrationUpdated` event
-```javascript
-MobileMessaging.register('registrationUpdated',
-     function(internalId) {
-         console.log('Internal ID: ' + internalId);
-     }
-);
-```
-
-### `geofenceEntered` event
-```javascript
-MobileMessaging.register('geofenceEntered',
-     function(geo) {
-         console.log('Geo area entered: ' + geo.area.title);
-     }
-);
-```
-
-Supported geo fields are described below:
-```javascript
-geo: {
-    area: {
-        id: '<area id>',
-        center: {
-            lat: '<area latitude>',
-            lon: '<area longitude>'
-        },
-        radius: '<area radius>',
-        title: '<area title>'
-    }
-}
-```
-
-### `actionTapped` event
-
-Regular notification action:
-
-```javascript
-MobileMessaging.register('actionTapped',
-     function(message, actionId) {
-         console.log('Action ' + actionId + ' tapped for message ' + message.body);
-     }
-);
-```
-
-Text input action:
-
-```javascript
-MobileMessaging.register('actionTapped',
-     function(message, actionId, text) {
-         console.log('User responded to a message ' + message.body + ' with following text: ' + text);
-     }
-);
-```
-
-## Synchronizing user data
-It is possible to sync user data to the server, fetch latest user data from the server as well as log out user (wipe out current user data) from mobile device and the server side.
-
-### Sync user data
-Set of predefined data fields is currently supported as well as custom fields containing string, number or date. Root level of user data contains all predefined fields as listed below. `customData` object shall contain all custom fields.
-```javascript
-MobileMessaging.syncUserData({
-        externalUserId: 'johnsmith',
-        firstName: 'John',
-        lastName: 'Smith',
-        middleName: 'Matthew',
-        msisdn: '385989000000',
-        gender: 'M',
-        birthdate: new Date(),
-        email: 'john.smith@infobip.com',
-        customData: {
-            customString: 'CustomString',
-            customDate: new Date(),
-            customNumber: 3
-        }
-    },
-    function(data) {
-        alert('User data synchronized:' + JSON.stringify(data));
-    },
-    function(error) {
-        alert('Error while syncing user data: ' + error);
-    }
-);
-```
-
-### Fetch user data
-```javascript
-MobileMessaging.fetchUserData(
-    function(data) {
-        alert('User data fetched:' + JSON.stringify(data));
-    },
-    function(error) {
-        alert('Error while syncing user data: ' + error);
-    }
-);
-```
-
-### User logout
-```javascript
-MobileMessaging.logout(
-    function() {
-        alert('User logged out.');
-    },
-    function(error) {
-        alert('Error while logging out user: ' + error);
-    }
-);
-```
-
-## Disabling the push registration
-Push registration on user's device is by default enabled to receive push notifications (regular push messages/geofencing campaign messages/messages fetched from the server).
-For notifications not to be displayed in the notification center you might send a silent campaign, but it you need to opt out of receiving messages call `disablePushRegistration`:
-
-```javascript
-MobileMessaging.disablePushRegistration(function () {
-        console.log('Registration disabled.');
-    });
-```
-
-## Mark messages as seen
-Mobile Messaging SDK has an API to mark messages as seen by user. This is usually done when user opens a particular message. Message can be obtained either via `messageReceived` event or together with geo area with `geofenceEntered` event (via geo.message).
-```javascript
-var message = ...;
-
-MobileMessaging.markMessagesSeen([message.messageId], function(messageIds){
-    console.log("message ids marked as seen: " + messageIds);
-}, function(error){
-    console.log(error);
-});
-```
-Note that corresponding SDK function accepts array of message IDs as input parameter. You can also set success and error callbacks. Success callback will provide array of message IDs that were marked as seen. Error callback will notify about an error and provide description of error if any. 
-
-## Geofencing
-It is possible to enable geofencing engine inside Mobile Messaging. In this case `geofencingEnabled` shall be set to true in [initialization configuration](#initialization-configuration). Appropriate permissions should be also requested or configured for your application prior to initialization of library. Initialization will fail if there are no appropriate permissions.
-
-### Android
-Make sure that location permission is added to android configuration in "config.xml":
-```xml
-<widget ... xmlns:android="http://schemas.android.com/apk/res/android">
-    ...
-    <platform name="android">
-        <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-        </config-file>
-    </platform>
-    ...
-</widget>
-```
-
-After that Mobile Messaging plugin can be initialized with geofencing enabled. Be aware that the plugin might request runtime permissions by itself on Android 6.0 and above right before initialization.
-
-### iOS
-Make sure to include NSLocationWhenInUseUsageDescription and NSLocationAlwaysUsageDescription keys in your app’s Info.plist. These keys let you describe the reason your app accesses the user’s location information. Mobile Messaging library will request location permission by itself. iOS will use the values of these keys in the alert panel displayed to the user when requesting permission to use location services.
-
-## Message storage
-Mobile Messaging SDK for Cordova supports a message storage feature. If the storage is enabled in configuration, then the plugin will save all push messages to the configured message storage. Plugin will handle and save messages that are received both during background and during foreground operation of the app. Two types of message storage configuration are supported: default storage and an external one.
-
-### Default message storage
-Mobile Messaging SDK supports a built-in message storage. `defaultMessageStorage` option shall be set to true in [initialization configuration](#initialization-configuration) to enable it. If default message storage is enabled, then it will be possible to access all the messages received by the library using methods described below.
-
-```javascript
-MobileMessaging.init({
-        applicationCode: '<your_application_code>',
-        defaultMessageStorage: true,
-        android: {
-            senderId: '<sender id>'
-        },
-        ios: {
-            notificationTypes: ['alert', 'badge', 'sound']
-        }
-    },
-    function(error) {
-        console.log('Init error: ' + error);
-    }
-);
-...
-
-/**
- * Retrieves all messages from message storage
- */
-MobileMessaging.defaultMessageStorage().findAll(function(messages){
-    console.log('Currently have ' + messages.length + ' messages in default storage');
-});
-
-//**
- * Retrieves message from the storage using provided message id
- */
-MobileMessaging.defaultMessageStorage().find('existing-message-id', function(message) {
-    console.log('Found message by id: ' + JSON.stringify(message));
-});
-
-/**
- * Deletes all messages
- */
-MobileMessaging.defaultMessageStorage().deleteAll(function() {
-    console.log('Deleted all messages')
-});
-
-/**
- * Deletes a messaging with the provided message id
- */
-MobileMessaging.defaultMessageStorage().delete('existing-message-id', function() {
-    console.log('Deleted all messages')
-});
-
-```
- > ### Notice
- > Default message storage is a simple wrapper implementation over Core Data on iOS and SQLite on Android and is currently not designed to support large numbers of received messages. Note that performance of default message storage may decrease with the increasing number of messages stored inside. It is recommended to use [external message storage](#external-message-storage) to have full control over received messages.
-
-### External message storage
-Mobile Messaging SDK for Cordova can be initialized with a custom external implementation of message storage. In this case the plugin will use the supplied message storage to save all the received messages. This option is recommended because in this case developer has full control over how and where messages are stored and which procedures apply. External message storage has to comply with the interface below in order to be used with Mobile Messaging SDK for Cordova.
-
-```javascript
-var myStorageImplementation = {
-
-    /**
-     * Will be called by the plugin when messages are received and it's time to save them to the storage
-     *
-     * @param {Array} array of message objects to save to storage
-     */
-    save: function(messages) {
-    
-    },
-
-    /**
-     * Will be called by the plugin to find a message by message id
-     *
-     * @param {Function} callback has to be called on completion with one parameter - found message object
-     */
-    find: function(messageId, callback) {
-    
-    },
-
-    /**
-     * Will be called by the plugin to find all messages in the storage
-     *
-     * @param {Function} callback has to be called on completion with one parameter - an array of available messages
-     */
-    findAll: function(callback) {
-    
-    },
-
-    /**
-     * Will be called by the plugin when its time to initialize the storage
-     */
-    start: function() {
-    
-    },
-
-    /**
-     * Will be called by the plugin when its time to deinitialize the storage
-     */
-    stop: function() {
-    
-    }
-}
-
-```
-Then an external message storage has to be supplied with [initialization configuration](#initialization-configuration) so that SDK will be able to use it to store received messages.
-
-```javascript
-MobileMessaging.init({
-        applicationCode: '<your_application_code>',
-        messageStorage: myStorageImplementation,
-        android: {
-            senderId: '<sender id>'
-        },
-        ios: {
-            notificationTypes: ['alert', 'badge', 'sound']
-        }
-    },
-    function(error) {
-        console.log('Init error: ' + error);
-    }
-);
-```
-
-### External message storage implementation with local storage
-This section covers an example implementation of external message storage with the key-value local storage of the underlying web view provided by cordova.
-
-```javascript
-var localStorage = {
-
-    save: function(messages) {
-        console.log('Saving messages: ' + JSON.stringify(messages));
-        for (var i = 0; i < messages.length; i++) {
-            window.localStorage.setItem(messages[i].messageId, JSON.stringify(messages[i]));
-        }
-    },
-
-    find: function(messageId, callback) {
-        console.log('Find message: ' + messageId);
-        var message = window.localStorage.getItem(messageId);
-        if (message) {
-            console.log('Found message: ' + message);
-            callback(JSON.parse(message));
-        } else {
-            callback({});
-        }
-    },
-
-    findAll: function(callback) {
-        console.log('Find all');
-        this.findAllByKeys(0, [], function(messages) {
-            console.log('Found ' + messages.length + ' messages');
-            callback(messages);
-        });
-    },
-
-    start: function() {
-        console.log('Start');
-    },
-
-    stop: function() {
-        console.log('Stop');
-    },
-
-    findAllByKeys: function(ind, foundMessages, callback) {
-        if (ind >= window.localStorage.length) {
-            callback(foundMessages);
-            return;
-        }
-        this.find(window.localStorage.key(ind), function(message) {
-            if (message) {
-                foundMessages.push(message);
-            }
-            storage.findAllByKeys(ind + 1, foundMessages, callback);
-        })
-    }
-}
-```
-
-And Mobile Messaging can be initialized to use this storage as below:
-
-```javascript
-MobileMessaging.init({
-        applicationCode: '<your_application_code>',
-        messageStorage: localStorage,
-        android: {
-            senderId: '<sender id>'
-        },
-        ios: {
-            notificationTypes: ['alert', 'badge', 'sound']
-        }
-    },
-    function(error) {
-        console.log('Init error: ' + error);
-    }
-);
-```
-
-## Privacy settings
-
-Mobile Messaging SDK has several options to provide different levels of users privacy for your application. The settings are represented by `PrivacySettings` object and may be set up as follows:
-```javascript
-MobileMessaging.init({
-        applicationCode: ...,
-        android: ...,
-        ios: ...,
-        privacySettings: {
-            carrierInfoSendingDisabled: true,
-            systemInfoSendingDisabled: true,
-            userDataPersistingDisabled: true
-        }
-    },
-    function(error) {
-        console.log('Init error: ' + error);
-    }
-);
-...
-```
-
-- `carrierInfoSendingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be sending the carrier information to the server. Default value is `false`.
-- `systemInfoSendingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be sending the system information such as OS version, device model, application version to the server. Default value is `false`.
-- `userDataPersistingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be persisting the [User Data](https://github.com/infobip/mobile-messaging-cordova-plugin#synchronizing-user-data) locally. Persisting user data locally gives you quick access to the data and eliminates a need to implement the persistent storage yourself. Default value is `false`.
-
-## Delivery improvements and rich content notifications
-
-Mobile Messaging SDK provides support for rich content inside push notifications on iOS and Android. Only static images are supported on Android, while iOS supports static images and GIF animations.
-
-SDK supports rich content on Android out of the box. iOS platform **must be** additionally configured for it.
-
-### Enabling notification extension in iOS for rich content and reliable delivery
-
-Additional Notification Service Extension **must be** be configured for iOS platform as described [here](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10). Note that you don't need to configure your main application to pass App Group ID to SDK. Instead you will have to provide `notificationExtensionAppGroupId` as part of your application configuration. Refer to [configuration section](#initialization-configuration) for details.
-
-### Sending content
-
-In order to receive media content through Push messages, you need to create a new campaign on Customer portal or [send a message](https://dev.infobip.com/docs/send-push-notifications) through Push HTTP API
-with `contentUrl` parameter.
-
-<center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/RichNotifCUP.png?raw=true" alt="Rich notification - CUP"/></center>
-
-### Receiving on Android
-
-Provided image will be displayed in the notification drawer where default rich notification’s design correlates with OS version. As of API 16 - Jelly Bean, image downloaded from provided URL will be displayed not only in normal view, but also in expanded, big view. 
-
-<table class="image">
-<tr>
-<td><img src="https://github.com/infobip/mobile-messaging-sdk-android/wiki/images/RichNotifAndroid7_1.gif?raw=true" alt="Rich notification - Android 7.1"/></td>
-<td><img src="https://github.com/infobip/mobile-messaging-sdk-android/wiki/images/RichNotifAndroid4_4.gif?raw=true" alt="Rich notification - Android 4.4"/></td>
-</tr>
-<caption align="bottom"><b>Preview of rich notifications on Android 7.1 and Android 4.4</b></caption>
-</table>
-
-### Receiving on iOS
-
-Provided content will be displayed on devices with iOS 10.+ in the notification center.
-
-<center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/RichNotifIos10.gif?raw=true" alt="Rich notification - iOS10"/></center>
-
-## Interactive notifications
-
-Interactive notifications are push notifications that provide an option for end user to interact with application through button tap action. This interaction can be accomplished by using Mobile Messaging SDK predefined interactive notification categories or creating your own.
-
-Tapping the action should trigger `actionTapped` event where you can act upon the received action identifier.
-
-### Predefined categories
-
-Mobile Messaging SDK provides only one predefined interaction category for now, but this list will be extended in future.
- 
-Displaying of Interactive Notifications with predefined categories can be tested without any additional implementation on application side through Push API.
-
-> A = action
-
-| Category.id | A.id | A.title | A.foreground | A.authenticationRequired | A.destructive | A.moRequired |
-| --- | --- | --- | --- | --- | --- | --- |
-| mm_accept_decline | mm_accept | Accept | true | true | false | true |
-|| mm_decline | Decline | false | true | true | true |
-
-### Custom categories
-
-Interactive notifications should be registered at the SDK initialization step by providing `notificationCategories` configuration:
-
-```javascript
-MobileMessaging.init({
-    applicationCode: ...,
-    android: ...,
-    ios: ...,
-    notificationCategories: [{ // a list of custom interactive notification categories that your application has to support
-        identifier: <String; a unique category string identifier>,
-        actions: [ // a list of actions that a custom interactive notification category may consist of
-            {
-                identifier: <String; a unique action identifier>,
-                title: <String; an action title, represents a notification action button label>,
-                foreground: <Boolean; to bring the app to foreground or leave it in background state (or not)>,
-                textInputPlaceholder: <String; custom input field placeholder>,
-                moRequired: <Boolean; to trigger MO message sending (or not)>,
-                
-                // iOS only
-                authenticationRequired: <Boolean; to require device to be unlocked before performing (or not)>,
-                destructive: <Boolean; to be marked as destructive (or not)>,
-                textInputActionButtonTitle: <String; custom label for a sending button>,
-                
-                // Android only
-                icon: <String; a resource name for a special action icon>
-            }
-            ...
-        ]
-    }]
-    },
-    function(error) {
-        console.log('Init error: ' + error);
-    }
-);
-...
-```
-
-## In-app notifications
-
-In-app notifications are alerts shown in foreground when user opens the app. Only the last received message with in-app enabled flag is displayed. If the sent notification didn’t have any category, in-app alert will be shown with default actions (localized texts): 
-
-| Action | Android action ID | iOS action ID | Foreground |
-| --- | --- | --- | --- |
-| `Cancel` | `mm_cancel` | `com.apple.UNNotificationDismissActionIdentifier` | false |
-| `Open` | `mm_open` | `com.apple.UNNotificationDefaultActionIdentifier` | true |
-
-For [interactive notifications](#interactive-notifications), actions defined for category will be displayed.
-
-
-Tapping the action should trigger `actionTapped` event where you can act upon the received action identifier.
-
-You can send in-app messages through our [Push HTTP API](https://dev.infobip.com/docs/send-push-notifications) with `showInApp` boolean parameter that needs to be set up to `true` under `notificationOptions`.
-
-## Configuring device as a primary one
-
-Single user profile on Infobip Portal can have one or more mobile devices with the application installed. You might want to mark one of such devices as a primary device and send push messages only to this device (i.e. receive bank authorization codes only on one device). For this particular use-case and other similar use-cases you can use APIs provided by Mobile Messaging SDK.
-
-### Setting device as primary
-
-Set primary to **true** or **false** for the current device:
-```javascript
-MobileMessaging.setPrimary(true);
-```
-
-Mobile Messaging SDK is responsible for syncing the primary setting with the server, that is the setting will be synchronized with the server eventually.
-
-### Getting current setting
-
-Retrieving current value of the primary setting is also possible through API:
-```javascript
-MobileMessaging.isPrimary(
-    function(isPrimary){
-        // handle current isPrimary value
-    });
-```
-
-## FAQ
-
-### How to open application webView on message tap
-- Install "cordova-plugin-inappbrowser" plugin
-- Register event handler for notification tapping in MobileMessaging
-```javascript
-MobileMessaging.register("notificationTapped", function(message) {
-  if (message.customPayload && message.customPayload.url) {
-    var url = message.customPayload.url;
-    cordova.InAppBrowser.open(url, "_blank", "location=yes");
-  }
-});
-```
-- Now you can send push message with custom payload and "url" field through api or portal
-```json
-"customPayload":{
-   "url": "http://infobip.com/"
-}
-```
-
-### What if my android build fails after adding the SDK?
-One of possible reasons for that is dependency conflict between plugins. SDK provides special properties which you can use to enfore specific versions of dependencies for the SDK:
-- `ANDROID_SUPPORT_VER_OVERRIDE` - set to specific version e.g. "26.1.+" to use this version of android support libraries within SDK
-- `ANDROID_GMS_VER_OVERRIDE` - set to specific version e.g. "10.+" to use this version of Google dependencies for push and geofencing
-
-You can set these properties when adding the plugin:
-```bash
-$ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --variable ANDROID_SUPPORT_VER_OVERRIDE="26.1.+" --variable ANDROID_GMS_VER_OVERRIDE="10.+"
-```
-
-Or you can set properties in `config.xml` of your application inside the plugin section of the SDK:
-```xml
-<plugin name="com-infobip-plugins-mobilemessaging" spec="https://github.com/infobip/mobile-messaging-cordova-plugin.git">
-    <variable name="ANDROID_SUPPORT_VER_OVERRIDE" value="26.1.+" />
-    <variable name="ANDROID_GMS_VER_OVERRIDE" value="10.+" />
-</plugin>
-```
-
-> #### Notice
-> Make sure to remove and add the plugin if you want to change any of these parameters.
+| If you have any questions or suggestions, feel free to send an email to support@infobip.com or create an <a href="https://github.com/infobip/mobile-messaging-sdk-ios/issues" target="_blank">issue</a>. |
+|---|
