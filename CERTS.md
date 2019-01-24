@@ -133,7 +133,9 @@ The simplest approach to integrate Mobile Messaging SDK with an existing app is 
 	```
 
 <br>
-<center><b>NEXT STEPS: [User profile](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/User-profile)</b></center>
+<b>
+<center>NEXT STEPS: [User profile](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/User-profile)</center>
+</b>
 <br>
 
 <br>
